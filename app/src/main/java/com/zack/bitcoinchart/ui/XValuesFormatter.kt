@@ -14,7 +14,6 @@ class XValuesFormatter : ValueFormatter() {
 
     override fun getAxisLabel(value: Float, axis: AxisBase?): String {
         val date = Date(value.roundToLong() * 1000)
-        Log.v("DATE", (date.month+date.day).toString())
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         return sdf.format(date)
     }

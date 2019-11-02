@@ -5,6 +5,6 @@ import io.reactivex.Single
 import retrofit2.http.GET
 
 interface BitcoinChartApiService {
-    @GET("/charts/transactions-per-second")
+    @GET("/charts/market-price")
     fun fetchBitCoinChartData(): Single<ChartData>
 }

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -21,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+
 
 class ChartActivity : AppCompatActivity() {
     @Inject
@@ -53,16 +55,17 @@ class ChartActivity : AppCompatActivity() {
         dataSet.setValueTextColor(Color.RED)
         val lineData = LineData(dataSet)
         chart.data = lineData
+        setUpChart()
+        chart.invalidate()
+    }
+
+    private fun setUpChart() {
         chart.isDragEnabled = true
         chart.isScaleXEnabled = true
         chart.isScaleYEnabled = true
         chart.isDoubleTapToZoomEnabled = true
         chart.setPinchZoom(true)
-        chart.xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chart.xAxis.valueFormatter = XValuesFormatter()
-        chart.axisLeft.valueFormatter = YValuesFormatter()
-        chart.axisRight.valueFormatter = YValuesFormatter()
-        chart.invalidate()
-
     }
 }
