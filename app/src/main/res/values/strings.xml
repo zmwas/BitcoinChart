@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BitCoinChart</string>
+    <string name="description">Average USD market price across major bitcoin exchanges</string>
 </resources>

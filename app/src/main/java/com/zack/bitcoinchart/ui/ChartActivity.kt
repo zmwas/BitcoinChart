@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -60,6 +61,8 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun setUpChart() {
+        val description = Description()
+        description.text = getString(R.string.description)
         chart.isDragEnabled = true
         chart.isScaleXEnabled = true
         chart.isScaleYEnabled = true
@@ -67,5 +70,6 @@ class ChartActivity : AppCompatActivity() {
         chart.setPinchZoom(true)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chart.xAxis.valueFormatter = XValuesFormatter()
+        chart.description =  description
     }
 }
