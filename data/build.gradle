@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 29
     sourceCompatibility = 1.8
@@ -48,7 +48,8 @@ dependencies {
 
     // dagger
     implementation 'com.google.dagger:dagger:2.23'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.23'
+    kapt 'com.google.dagger:dagger-android-processor:2.23'
+    kapt 'com.google.dagger:dagger-compiler:2.23'
 
 
     implementation 'androidx.appcompat:appcompat:1.1.0'

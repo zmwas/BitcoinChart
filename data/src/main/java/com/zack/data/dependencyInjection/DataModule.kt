@@ -1,6 +1,8 @@
 package com.zack.data.dependencyInjection
 
 import com.zack.data.api.BitcoinChartApiService
+import com.zack.data.repository.BitCoinChartRepository
+import com.zack.data.repository.BitcoinChartRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -13,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class NetworkModule {
+class DataModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -42,7 +44,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("")
+            .baseUrl("https://api.blockchain.info/charts/transactions-per-second/")
             .client(okHttpClient)
             .build()
     }
@@ -51,5 +53,11 @@ class NetworkModule {
     @Singleton
     fun provideBitcoinChartApiService(retrofit: Retrofit): BitcoinChartApiService {
         return retrofit.create(BitcoinChartApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepository(apiService: BitcoinChartApiService):BitCoinChartRepository {
+        return BitcoinChartRepositoryImpl(apiService)
     }
 }

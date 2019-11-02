@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Value(
     @SerializedName("x")
     @Expose
-    var x: Double,
+    var x: Float,
     @SerializedName("y")
     @Expose
-    var y: Double
+    var y: Float
 )

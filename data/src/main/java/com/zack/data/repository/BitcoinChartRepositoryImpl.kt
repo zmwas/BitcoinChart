@@ -5,8 +5,8 @@ import com.zack.data.model.ChartData
 import io.reactivex.Single
 import javax.inject.Inject
 
-class BitcoinChartRepository @Inject constructor(private val apiService: BitcoinChartApiService) {
-    fun fetchChartData(): Single<ChartData> {
+class BitcoinChartRepositoryImpl @Inject constructor(private val apiService: BitcoinChartApiService) :BitCoinChartRepository{
+    override fun fetchChartData(): Single<ChartData> {
         return apiService.fetchBitCoinChartData()
     }
 }
