@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BitCoinChart</string>
     <string name="description">Average USD market price across major bitcoin exchanges</string>
-    <string name="progress_message">Loading ...</string>
-    <string name="timespan">Timespan</string>
+    <string name="progress_message">Loading …</string>
+    <string name="timespan">Time Span</string>
     <string name="rolling_average">Rolling Average</string>
     <string name="chart_label">Bitcoin price</string>
     <string-array name="timespan">
