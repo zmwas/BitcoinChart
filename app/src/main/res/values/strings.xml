@@ -4,6 +4,7 @@
     <string name="progress_message">Loading ...</string>
     <string name="timespan">Timespan</string>
     <string name="rolling_average">Rolling Average</string>
+    <string name="chart_label">Bitcoin price</string>
     <string-array name="timespan">
         <item>1 year</item>
         <item>6 months</item>

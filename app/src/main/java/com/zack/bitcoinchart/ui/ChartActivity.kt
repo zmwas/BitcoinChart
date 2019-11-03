@@ -106,7 +106,7 @@ class ChartActivity : AppCompatActivity() {
         values.iterator().forEach {
             entries.add(Entry(it.x, it.y))
         }
-        val dataSet = LineDataSet(entries, "Bitcoin price");
+        val dataSet = LineDataSet(entries, getString(R.string.chart_label));
         dataSet.setColor(Color.BLUE)
         dataSet.setValueTextColor(Color.RED)
         val lineData = LineData(dataSet)
