@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -53,6 +54,15 @@ class ChartActivity : AppCompatActivity() {
 
     private fun displayError(it: Throwable) {
         hideProgressDialog()
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(it.message)
+            .setCancelable(true)
+            .setPositiveButton(android.R.string.ok) { dialog, d ->
+                dialog.dismiss()
+            }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun setUpSpinners() {
