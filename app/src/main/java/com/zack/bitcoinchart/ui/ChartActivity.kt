@@ -1,7 +1,6 @@
 package com.zack.bitcoinchart.ui
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -33,8 +32,7 @@ class ChartActivity : AppCompatActivity() {
     lateinit var viewModelFactory: BitcoinChartViewModelFactory
     private lateinit var viewModel: BitcoinChartViewModel
     private lateinit var binding: ActivityChartBinding
-    private lateinit var chart: LineChart
-    protected lateinit var progressDialog: ProgressDialog
+    private lateinit var priceChart: LineChart
     lateinit var timeSpan: String
     lateinit var rollingAverage: String
 
@@ -43,8 +41,7 @@ class ChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chart)
-        chart = binding.chart
-        progressDialog = ProgressDialog(this)
+        priceChart = binding.priceChart
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BitcoinChartViewModel::class.java)
         timeSpan = "2weeks"
         rollingAverage = "8hours"
@@ -53,7 +50,7 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun displayError(it: Throwable) {
-        hideProgressDialog()
+        hideLoading()
         val builder = AlertDialog.Builder(this)
         builder.setMessage(it.message)
             .setCancelable(true)
@@ -66,7 +63,7 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun setUpSpinners() {
-        binding.timespan.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.timespanSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
             }
 
@@ -76,7 +73,7 @@ class ChartActivity : AppCompatActivity() {
             }
         }
 
-        binding.rollingAverage.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.rollingAverageSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
             }
 
@@ -88,16 +85,16 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        if (!progressDialog.isShowing()) {
-            progressDialog.setCancelable(false)
-            progressDialog.setIndeterminate(false)
-            progressDialog.setMessage(getString(R.string.progress_message))
-            progressDialog.show()
-        }
+        binding.loadingLayout.visibility = View.VISIBLE
+        binding.priceChart.visibility = View.GONE
+        binding.filter.visibility = View.GONE
     }
 
-    fun hideProgressDialog() {
-        progressDialog.dismiss()
+    private fun hideLoading() {
+        binding.loadingLayout.visibility = View.GONE
+        binding.priceChart.visibility = View.VISIBLE
+        binding.filter.visibility = View.VISIBLE
+
     }
 
     @SuppressLint("CheckResult")
@@ -110,31 +107,31 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun populateLineChart(chartData: ChartData) {
+        hideLoading()
         val values = chartData.values
         val entries = ArrayList<Entry>()
         values.iterator().forEach {
             entries.add(Entry(it.x, it.y))
         }
         val dataSet = LineDataSet(entries, getString(R.string.chart_label));
-        dataSet.setColor(Color.BLUE)
-        dataSet.setValueTextColor(Color.RED)
+        dataSet.color = Color.BLUE
+        dataSet.valueTextColor = Color.RED
         val lineData = LineData(dataSet)
-        chart.data = lineData
+        priceChart.data = lineData
         setUpChart()
-        chart.invalidate()
-        hideProgressDialog()
+        priceChart.invalidate()
     }
 
     private fun setUpChart() {
         val description = Description()
         description.text = getString(R.string.description)
-        chart.isDragEnabled = true
-        chart.isScaleXEnabled = true
-        chart.isScaleYEnabled = true
-        chart.isDoubleTapToZoomEnabled = true
-        chart.setPinchZoom(true)
-        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        chart.xAxis.valueFormatter = XValuesFormatter()
-        chart.description = description
+        priceChart.isDragEnabled = true
+        priceChart.isScaleXEnabled = true
+        priceChart.isScaleYEnabled = true
+        priceChart.isDoubleTapToZoomEnabled = true
+        priceChart.setPinchZoom(true)
+        priceChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        priceChart.xAxis.valueFormatter = XValuesFormatter()
+        priceChart.description = description
     }
 }

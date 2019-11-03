@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:id="@+id/progress_view"
+                                                   android:background="@color/white">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/progress_message"
+              android:textSize="24sp"
+              app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
+              app:layout_constraintBottom_toTopOf="@+id/progressBar1"
+              />
+    <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@string/progress_message"
+            app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
+            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+
+    />
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horizontal_guideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vertical_guideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
