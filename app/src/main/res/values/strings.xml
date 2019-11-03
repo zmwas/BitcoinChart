@@ -2,4 +2,22 @@
     <string name="app_name">BitCoinChart</string>
     <string name="description">Average USD market price across major bitcoin exchanges</string>
     <string name="progress_message">Loading ...</string>
+    <string name="timespan">Timespan</string>
+    <string name="rolling_average">Rolling Average</string>
+    <string-array name="timespan">
+        <item>1 year</item>
+        <item>6 months</item>
+        <item>3 months</item>
+        <item>1 month</item>
+        <item>2 weeks</item>
+    </string-array>
+
+    <string-array name="rolling_average">
+        <item>8 hours</item>
+        <item>16 hours</item>
+        <item>24 hours</item>
+        <item>48 hours</item>
+    </string-array>
+
+
 </resources>

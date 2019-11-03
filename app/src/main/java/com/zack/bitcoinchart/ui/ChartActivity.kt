@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +23,6 @@ import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModelFactory
 import com.zack.data.model.ChartData
 import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -32,7 +34,8 @@ class ChartActivity : AppCompatActivity() {
     lateinit var binding: ActivityChartBinding
     private lateinit var chart: LineChart
     protected lateinit var progressDialog: ProgressDialog
-
+    lateinit var timeSpan: String
+    lateinit var rollingAverage: String
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +43,40 @@ class ChartActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chart)
         chart = binding.chart
-        progressDialog    = ProgressDialog(this)
+        progressDialog = ProgressDialog(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BitcoinChartViewModel::class.java)
-        fetchBitcoinPrice()
+        timeSpan = "1year"
+        rollingAverage = "8hours"
+        fetchBitcoinPrice(timeSpan, rollingAverage)
+        setUpSpinners()
     }
 
     private fun displayError(it: Throwable) {
         hideProgressDialog()
+    }
+
+    private fun setUpSpinners() {
+        binding.timespan.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
+                timeSpan = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
+                fetchBitcoinPrice(timeSpan,rollingAverage)
+            }
+        }
+
+        binding.rollingAverage.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
+                rollingAverage = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
+                fetchBitcoinPrice(timeSpan,rollingAverage)
+            }
+        }
     }
 
     private fun showLoading() {
@@ -57,19 +87,21 @@ class ChartActivity : AppCompatActivity() {
             progressDialog.show()
         }
     }
+
     fun hideProgressDialog() {
         progressDialog.dismiss()
     }
 
     @SuppressLint("CheckResult")
-    fun  fetchBitcoinPrice() {
+    fun fetchBitcoinPrice(timeSpan: String, rollingAverage: String) {
         showLoading()
-        viewModel.fetchChartData()
+        viewModel.fetchChartData(timeSpan, rollingAverage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::populateLineChart, this::displayError)
 
     }
+
     private fun populateLineChart(chartData: ChartData) {
         hideProgressDialog()
         val values = chartData.values
@@ -89,9 +121,9 @@ class ChartActivity : AppCompatActivity() {
     private fun setUpChart() {
         val description = Description()
         description.text = getString(R.string.description)
-        chart.isDragEnabled = true
-        chart.isScaleXEnabled = true
-        chart.isScaleYEnabled = true
+        chart.isDragEnabled = false
+        chart.isScaleXEnabled = false
+        chart.isScaleYEnabled = false
         chart.isDoubleTapToZoomEnabled = true
         chart.setPinchZoom(true)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM

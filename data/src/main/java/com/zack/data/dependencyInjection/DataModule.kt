@@ -24,8 +24,6 @@ class DataModule {
             val request = it.request()
             val url = request.url()
             val queryUrl = url.newBuilder()
-                .addQueryParameter("timespan", "5weeks")
-                .addQueryParameter("rollingAverage", "8hours")
                 .addQueryParameter("format", "json")
                 .build()
             val requestBuilder: Request.Builder = request.newBuilder().url(queryUrl)

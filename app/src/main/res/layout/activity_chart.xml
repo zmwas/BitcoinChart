@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      app:layout_constraintTop_toTopOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      android:id="@+id/filter"
+                      android:layout_marginBottom="30dp"
+        >
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:text="@string/timespan"
+            />
+            <Spinner android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/timespan"
+                     android:layout_weight="1"
+                     android:entries="@array/timespan"
+            />
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:text="@string/rolling_average"
+            />
+
+            <Spinner android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/rollingAverage"
+                     android:layout_weight="1"
+                     android:entries="@array/rolling_average"
+            />
+        </LinearLayout>
         <com.github.mikephil.charting.charts.LineChart
+                app:layout_constraintTop_toBottomOf="@+id/filter"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </LinearLayout>
+                android:layout_height="0dp"
+
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

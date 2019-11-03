@@ -6,7 +6,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class BitcoinChartRepositoryImpl @Inject constructor(private val apiService: BitcoinChartApiService) :BitCoinChartRepository{
-    override fun fetchChartData(): Single<ChartData> {
-        return apiService.fetchBitCoinChartData()
+    override fun fetchChartData(timeSpan: String, rollingAverage: String): Single<ChartData> {
+        return apiService.fetchBitCoinChartData(timeSpan, rollingAverage)
     }
 }

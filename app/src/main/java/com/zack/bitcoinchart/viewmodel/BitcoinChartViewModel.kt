@@ -9,8 +9,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class BitcoinChartViewModel @Inject constructor(val fetchBitcoinChartDataUsecase: FetchBitcoinChartDataUsecase): ViewModel() {
-    fun fetchChartData():Single<ChartData> {
+class BitcoinChartViewModel @Inject constructor(private val fetchBitcoinChartDataUsecase: FetchBitcoinChartDataUsecase): ViewModel() {
+    fun fetchChartData(timeSpan:String, rollingAverage:String):Single<ChartData> {
+        fetchBitcoinChartDataUsecase.rollingAverage = rollingAverage
+        fetchBitcoinChartDataUsecase.timeSpan = timeSpan
         return fetchBitcoinChartDataUsecase
             .execute()
     }
