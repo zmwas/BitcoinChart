@@ -23,6 +23,7 @@ import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModelFactory
 import com.zack.data.model.ChartData
 import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -35,7 +36,7 @@ class ChartActivity : AppCompatActivity() {
     private lateinit var priceChart: LineChart
     lateinit var timeSpan: String
     lateinit var rollingAverage: String
-
+    private lateinit var disposable: Disposable
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,10 +100,15 @@ class ChartActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     private fun fetchBitcoinPrice(timeSpan: String, rollingAverage: String) {
         showLoading()
-        viewModel.fetchChartData(timeSpan, rollingAverage)
+         disposable = viewModel.fetchChartData(timeSpan, rollingAverage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::populateLineChart, this::displayError)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 
     private fun populateLineChart(chartData: ChartData) {
