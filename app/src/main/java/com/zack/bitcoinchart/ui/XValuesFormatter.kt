@@ -1,11 +1,7 @@
 package com.zack.bitcoinchart.ui
 
-import android.annotation.SuppressLint
-import android.util.Log
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToLong
