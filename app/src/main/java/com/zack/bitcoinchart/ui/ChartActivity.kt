@@ -22,6 +22,7 @@ import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModel
 import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModelFactory
 import com.zack.data.model.ChartData
 import dagger.android.AndroidInjection
+import dmax.dialog.SpotsDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -30,8 +31,8 @@ import javax.inject.Inject
 class ChartActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: BitcoinChartViewModelFactory
-    lateinit var viewModel: BitcoinChartViewModel
-    lateinit var binding: ActivityChartBinding
+    private lateinit var viewModel: BitcoinChartViewModel
+    private lateinit var binding: ActivityChartBinding
     private lateinit var chart: LineChart
     protected lateinit var progressDialog: ProgressDialog
     lateinit var timeSpan: String
@@ -58,23 +59,21 @@ class ChartActivity : AppCompatActivity() {
     private fun setUpSpinners() {
         binding.timespan.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
                 timeSpan = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
-                fetchBitcoinPrice(timeSpan,rollingAverage)
+                fetchBitcoinPrice(timeSpan, rollingAverage)
             }
         }
 
         binding.rollingAverage.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
                 rollingAverage = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
-                fetchBitcoinPrice(timeSpan,rollingAverage)
+                fetchBitcoinPrice(timeSpan, rollingAverage)
             }
         }
     }
@@ -99,11 +98,9 @@ class ChartActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::populateLineChart, this::displayError)
-
     }
 
     private fun populateLineChart(chartData: ChartData) {
-        hideProgressDialog()
         val values = chartData.values
         val entries = ArrayList<Entry>()
         values.iterator().forEach {
@@ -116,6 +113,7 @@ class ChartActivity : AppCompatActivity() {
         chart.data = lineData
         setUpChart()
         chart.invalidate()
+        hideProgressDialog()
     }
 
     private fun setUpChart() {
