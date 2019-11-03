@@ -22,7 +22,6 @@ import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModel
 import com.zack.bitcoinchart.viewmodel.BitcoinChartViewModelFactory
 import com.zack.data.model.ChartData
 import dagger.android.AndroidInjection
-import dmax.dialog.SpotsDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
