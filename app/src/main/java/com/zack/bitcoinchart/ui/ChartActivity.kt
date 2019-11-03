@@ -45,7 +45,7 @@ class ChartActivity : AppCompatActivity() {
         chart = binding.chart
         progressDialog = ProgressDialog(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BitcoinChartViewModel::class.java)
-        timeSpan = "1year"
+        timeSpan = "2weeks"
         rollingAverage = "8hours"
         fetchBitcoinPrice(timeSpan, rollingAverage)
         setUpSpinners()
