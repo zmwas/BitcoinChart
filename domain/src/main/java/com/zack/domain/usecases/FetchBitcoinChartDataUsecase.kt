@@ -13,6 +13,4 @@ class FetchBitcoinChartDataUsecase constructor(val bitCoinChartRepository: BitCo
     override fun buildSingle(): Single<ChartData> {
         return bitCoinChartRepository.fetchChartData(timeSpan!!, rollingAverage!!)
     }
-
-
 }
