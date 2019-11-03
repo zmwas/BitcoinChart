@@ -97,7 +97,7 @@ class ChartActivity : AppCompatActivity() {
     }
 
     @SuppressLint("CheckResult")
-    fun fetchBitcoinPrice(timeSpan: String, rollingAverage: String) {
+    private fun fetchBitcoinPrice(timeSpan: String, rollingAverage: String) {
         showLoading()
         viewModel.fetchChartData(timeSpan, rollingAverage)
             .subscribeOn(Schedulers.io())
