@@ -45,7 +45,6 @@ class ChartActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BitcoinChartViewModel::class.java)
         timeSpan = "2weeks"
         rollingAverage = "8hours"
-        fetchBitcoinPrice(timeSpan, rollingAverage)
         setUpSpinners()
     }
 
@@ -63,22 +62,22 @@ class ChartActivity : AppCompatActivity() {
     }
 
     private fun setUpSpinners() {
-        binding.timespanSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
-                timeSpan = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
-                fetchBitcoinPrice(timeSpan, rollingAverage)
-            }
-        }
-
         binding.rollingAverageSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
             }
 
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
                 rollingAverage = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
+                fetchBitcoinPrice(timeSpan, rollingAverage)
+            }
+        }
+
+        binding.timespanSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
+                timeSpan = adapterView!!.getItemAtPosition(position).toString().replace(" ", "")
                 fetchBitcoinPrice(timeSpan, rollingAverage)
             }
         }

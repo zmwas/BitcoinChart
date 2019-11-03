@@ -6,12 +6,13 @@
     <string name="rolling_average">Rolling Average</string>
     <string name="chart_label">Bitcoin price</string>
     <string-array name="timespan">
-        <item>1 year</item>
+        <item>2 weeks</item>
         <item>6 months</item>
         <item>3 months</item>
         <item>1 month</item>
-        <item>2 weeks</item>
+        <item>1 year</item>
     </string-array>
+
 
     <string-array name="rolling_average">
         <item>8 hours</item>

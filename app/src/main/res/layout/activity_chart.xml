@@ -44,6 +44,9 @@
                      android:id="@+id/rollingAverage_spinner"
                      android:layout_weight="1"
                      android:entries="@array/rolling_average"
+                     android:defaultValue="24 hours"
+
+
             />
         </LinearLayout>
         <com.github.mikephil.charting.charts.LineChart
