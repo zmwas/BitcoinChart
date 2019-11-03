@@ -118,9 +118,9 @@ class ChartActivity : AppCompatActivity() {
     private fun setUpChart() {
         val description = Description()
         description.text = getString(R.string.description)
-        chart.isDragEnabled = false
-        chart.isScaleXEnabled = false
-        chart.isScaleYEnabled = false
+        chart.isDragEnabled = true
+        chart.isScaleXEnabled = true
+        chart.isScaleYEnabled = true
         chart.isDoubleTapToZoomEnabled = true
         chart.setPinchZoom(true)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
